@@ -67,9 +67,17 @@ const loginController = async (req, res) => {
       });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_KEY, {
-      expiresIn: "1d",
-    });
+    const token = jwt.sign(
+      {
+        id: user._id,
+        isAdmin: user.isAdmin,
+        isDoctor: user.isDoctor,
+      },
+      process.env.JWT_KEY,
+      {
+        expiresIn: "1d",
+      }
+    );
 
     const type = user.isAdmin ? "admin" : (user.isDoctor ? "doctor" : "user");
 
