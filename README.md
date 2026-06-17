@@ -40,6 +40,18 @@ MediCareBook provides a unified dashboard where patients can search for verified
 
 ---
 
+## 🚀 Live Deployment
+
+### Frontend (Vercel)
+
+https://book-a-doctor-mern-stack.vercel.app
+
+### Backend API (Render)
+
+https://book-a-doctor-backend-rqr8.onrender.com
+
+---
+
 ## 3. Abstract
 
 Modern healthcare systems require fast, secure, and automated workflows to handle patient-doctor interactions and medical records. Traditional paper-based or manual scheduling processes suffer from booking delays, miscommunication, lack of practitioner verification, and fragmented medical document tracking. 
@@ -464,3 +476,31 @@ VITE_API_URL=http://localhost:8001
 ## 20. Acknowledgement
 
 This project was successfully developed by **Nanda Gunasri** under the **SmartBridge Full Stack Developer Program (VIP_FSD_C2_2026)** with guidance and mentorship from **Himanshu Sir**.
+
+---
+
+## 🌐 Production Links
+
+| Service           | URL                                                      |
+| ----------------- | -------------------------------------------------------- |
+| Frontend          | https://book-a-doctor-mern-stack.vercel.app              |
+| Backend API       | https://book-a-doctor-backend-rqr8.onrender.com          |
+| GitHub Repository | https://github.com/NandaGunasri/book-a-doctor-mern-stack |
+
+---
+
+## 📈 Deployment Status
+
+Frontend Deployment:
+✅ LIVE
+
+Backend Deployment:
+✅ LIVE
+
+MongoDB Atlas:
+✅ CONNECTED
+
+Production Readiness:
+✅ READY
+
+---
