@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require("multer");
 const authMiddleware = require("../middleware/authMiddleware");
+const doctorMiddleware = require("../middleware/doctorMiddleware");
 
 const {
   updateDoctorProfileController,
@@ -39,18 +40,21 @@ const router = express.Router();
 router.post(
   "/updateprofile",
   authMiddleware,
+  doctorMiddleware,
   updateDoctorProfileController
 );
 
 router.get(
   "/getdoctorappointments",
   authMiddleware,
+  doctorMiddleware,
   getAllDoctorAppointmentsController
 );
 
 router.post(
   "/handlestatus",
   authMiddleware,
+  doctorMiddleware,
   handleStatusController
 );
 

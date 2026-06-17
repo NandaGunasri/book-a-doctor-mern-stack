@@ -1,5 +1,6 @@
 const express = require("express");
 const authMiddleware = require("../middleware/authMiddleware");
+const adminMiddleware = require("../middleware/adminMiddleware");
 
 const {
   getAllUsersControllers,
@@ -11,17 +12,18 @@ const {
 
 const router = express.Router();
 
-router.get("/getallusers", authMiddleware, getAllUsersControllers);
+router.get("/getallusers", authMiddleware, adminMiddleware, getAllUsersControllers);
 
-router.get("/getalldoctors", authMiddleware, getAllDoctorsControllers);
+router.get("/getalldoctors", authMiddleware, adminMiddleware, getAllDoctorsControllers);
 
-router.post("/getapprove", authMiddleware, getStatusApproveController);
+router.post("/getapprove", authMiddleware, adminMiddleware, getStatusApproveController);
 
-router.post("/getreject", authMiddleware, getStatusRejectController);
+router.post("/getreject", authMiddleware, adminMiddleware, getStatusRejectController);
 
 router.get(
   "/getallAppointmentsAdmin",
   authMiddleware,
+  adminMiddleware,
   displayAllAppointmentController
 );
 
