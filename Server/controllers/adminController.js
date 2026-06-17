@@ -41,24 +41,23 @@ const getStatusApproveController = async (req, res) => {
   try {
     const { doctorId, status, userid } = req.body;
 
-    const doctor = await docSchema.findOneAndUpdate(
-      { _id: doctorId },
-      { status }
+    const doctor = await docSchema.findByIdAndUpdate(
+      doctorId,
+      { status },
+      { new: true }
     );
 
     const user = await userSchema.findOne({ _id: userid });
+    if (user) {
+      user.notification.push({
+        type: "doctor-account-request-updated",
+        message: `Your Doctor account has ${status}`,
+        onClickPath: "/notification",
+      });
 
-    const notification = user.notification;
-    notification.push({
-      type: "doctor-account-request-updated",
-      message: `Your Doctor account has ${status}`,
-      onClickPath: "/notification",
-    });
-
-    user.isDoctor = status === "approved" ? true : false;
-
-    await user.save();
-    await doctor.save();
+      user.isDoctor = status === "approved" ? true : false;
+      await user.save();
+    }
 
     return res.status(201).send({
       message: "Successfully updated doctor status",
@@ -78,22 +77,21 @@ const getStatusRejectController = async (req, res) => {
   try {
     const { doctorId, status, userid } = req.body;
 
-    const doctor = await docSchema.findOneAndUpdate(
-      { _id: doctorId },
-      { status }
+    const doctor = await docSchema.findByIdAndUpdate(
+      doctorId,
+      { status },
+      { new: true }
     );
 
     const user = await userSchema.findOne({ _id: userid });
-
-    const notification = user.notification;
-    notification.push({
-      type: "doctor-account-approved",
-      message: `Your Doctor account has ${status}`,
-      onClickPath: "/notification",
-    });
-
-    await user.save();
-    await doctor.save();
+    if (user) {
+      user.notification.push({
+        type: "doctor-account-approved",
+        message: `Your Doctor account has ${status}`,
+        onClickPath: "/notification",
+      });
+      await user.save();
+    }
 
     console.log(user);
     console.log(doctor);

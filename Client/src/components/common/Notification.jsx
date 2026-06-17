@@ -6,26 +6,14 @@ import { Button, Card, ListGroup, Container } from 'react-bootstrap';
 
 const API = import.meta.env.VITE_API_URL;
 
-const Notification = () => {
-  const [user, setUser] = useState({});
+const Notification = ({ userdata, setUserdata }) => {
   const navigate = useNavigate();
-
-  const getUser = () => {
-    const userdata = JSON.parse(localStorage.getItem('userData'));
-    if (userdata) {
-      setUser(userdata);
-    }
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
 
   const handleAllMarkRead = async () => {
     try {
       const res = await axios.post(
         `${API}/api/user/getallnotification`,
-        { userId: user._id },
+        { userId: userdata._id },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -35,17 +23,17 @@ const Notification = () => {
 
       if (res.data.success) {
         const updatedUser = {
-          ...user,
+          ...userdata,
           notification: [],
           seennotification: [
-            ...(user.seennotification || []),
-            ...(user.notification || []),
+            ...(userdata.seennotification || []),
+            ...(userdata.notification || []),
           ],
         };
 
         localStorage.setItem('userData', JSON.stringify(updatedUser));
         message.success(res.data.message);
-        setUser(updatedUser);
+        setUserdata(updatedUser);
       } else {
         message.error(res.data.message);
       }
@@ -59,7 +47,7 @@ const Notification = () => {
     try {
       const res = await axios.post(
         `${API}/api/user/deleteallnotification`,
-        { userId: user._id },
+        { userId: userdata._id },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -69,13 +57,13 @@ const Notification = () => {
 
       if (res.data.success) {
         const updatedUser = {
-          ...user,
+          ...userdata,
           seennotification: [],
         };
 
         localStorage.setItem('userData', JSON.stringify(updatedUser));
         message.success(res.data.message);
-        setUser(updatedUser);
+        setUserdata(updatedUser);
       } else {
         message.error(res.data.message);
       }
@@ -94,20 +82,20 @@ const Notification = () => {
   const tabItems = [
     {
       key: 'unread',
-      label: `Unread (${user.notification?.length || 0})`,
+      label: `Unread (${userdata.notification?.length || 0})`,
       children: (
         <Card className="notification-card border-0 shadow-sm mt-3">
           <Card.Header className="bg-white d-flex justify-content-between align-items-center py-3 border-0">
             <span className="fw-semibold text-dark">Unread Messages</span>
-            {user.notification?.length > 0 && (
+            {userdata.notification?.length > 0 && (
               <Button variant="link" className="p-0 text-decoration-none text-primary fw-medium" onClick={handleAllMarkRead}>
                 Mark all as read
               </Button>
             )}
           </Card.Header>
           <ListGroup variant="flush">
-            {user.notification?.length > 0 ? (
-              user.notification.map((item, idx) => (
+            {userdata.notification?.length > 0 ? (
+              userdata.notification.map((item, idx) => (
                 <ListGroup.Item
                   key={`unread-${idx}`}
                   action
@@ -135,20 +123,20 @@ const Notification = () => {
     },
     {
       key: 'read',
-      label: `Read (${user.seennotification?.length || 0})`,
+      label: `Read (${userdata.seennotification?.length || 0})`,
       children: (
         <Card className="notification-card border-0 shadow-sm mt-3">
           <Card.Header className="bg-white d-flex justify-content-between align-items-center py-3 border-0">
             <span className="fw-semibold text-dark">Read Messages</span>
-            {user.seennotification?.length > 0 && (
+            {userdata.seennotification?.length > 0 && (
               <Button variant="link" className="p-0 text-decoration-none text-danger fw-medium" onClick={handledeleteAllMark}>
                 Delete all read
               </Button>
             )}
           </Card.Header>
           <ListGroup variant="flush">
-            {user.seennotification?.length > 0 ? (
-              user.seennotification.map((item, idx) => (
+            {userdata.seennotification?.length > 0 ? (
+              userdata.seennotification.map((item, idx) => (
                 <ListGroup.Item
                   key={`read-${idx}`}
                   action

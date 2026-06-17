@@ -52,7 +52,7 @@ const UserHome = () => {
   const getDoctorData = async () => {
     try {
       const res = await axios.get(
-        `${API}/api/user/getalldoctorsu`,
+        `${API}/api/user/getalldoctors`,
         {
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('token'),
@@ -94,7 +94,7 @@ const UserHome = () => {
       case 'apply':
         return <ApplyDoctor userId={userdata._id} />;
       case 'notifications':
-        return <Notification />;
+        return <Notification userdata={userdata} setUserdata={setUserData} />;
       case 'home':
       default:
         return (

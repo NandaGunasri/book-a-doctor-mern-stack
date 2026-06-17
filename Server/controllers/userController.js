@@ -27,7 +27,7 @@ const registerController = async (req, res) => {
       email,
       password: hashedPassword,
       phone,
-      isAdmin: false,
+      isAdmin: type === "admin" ? true : false,
       isDoctor: false,
     });
 
@@ -302,7 +302,13 @@ const appointmentController = async (req, res) => {
     await newAppointment.save();
 
     // Notify Doctor (found via doctorInfo.userId or doctor doc's userId)
-    const docUserId = doctorInfo.userId || doctorInfo._id;
+    let docUserId = doctorInfo.userId;
+    if (!docUserId) {
+      const doctorDoc = await docSchema.findById(doctorId || doctorInfo._id);
+      if (doctorDoc) {
+        docUserId = doctorDoc.userId;
+      }
+    }
     const docUser = await userSchema.findById(docUserId);
     if (docUser) {
       docUser.notification.push({

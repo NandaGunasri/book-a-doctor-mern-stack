@@ -53,7 +53,7 @@ router.post("/getuserdata", authMiddleware, authController);
 router.post("/registerdoc", authMiddleware, docController);
 
 router.get(
-  "/getalldoctorsu",
+  "/getalldoctors",
   authMiddleware,
   getAllDoctorsControllers
 );
