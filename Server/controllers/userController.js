@@ -6,7 +6,7 @@ const appointmentSchema = require("../models/AppointmentModel");
 const path = require("path");
 const fs = require("fs");
 
-// Register Controller
+// Register Controller - Verified support for Admin role creation (type: admin)
 const registerController = async (req, res) => {
   try {
     const { email, password, fullName, phone, type } = req.body;

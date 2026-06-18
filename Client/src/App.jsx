@@ -17,7 +17,7 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-// Admin Route Wrapper
+// Admin Route Wrapper - Route protection for Admin dashboard
 const AdminRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   if (!token) {
