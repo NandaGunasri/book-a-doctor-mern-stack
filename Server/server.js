@@ -18,6 +18,10 @@ app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // routes
+app.get("/version", (req, res) => {
+  res.json({ version: "1.0.1-fixed" });
+});
+
 app.use("/api/user", require("./routes/userRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/doctor", require("./routes/doctorRoutes"));
